@@ -48,7 +48,7 @@ public:
     // Perform bootstrap (self-healing!)
     void bootstrap() {
         bootstrap_count_++;
-        cout << "    🔄 BOOTSTRAP #" << bootstrap_count_ 
+        cout << "    BOOTSTRAP #" << bootstrap_count_ 
              << " | Noise before: " << noise_bits_ << " bits" << endl;
         
         // Apply φ-bootstrapping formula
@@ -56,7 +56,7 @@ public:
             update_noise();
         }
         
-        cout << "    ✅ Noise after: " << noise_bits_ << " bits (target: " << TARGET_NOISE << ")" << endl;
+        cout << "    Noise after: " << noise_bits_ << " bits (target: " << TARGET_NOISE << ")" << endl;
     }
     
     // Add φ-noise to a value (simulates homomorphic noise)
@@ -70,7 +70,7 @@ public:
     uint64_t get_bootstrap_count() const { return bootstrap_count_; }
     
     void print_status() {
-        cout << "📊 Noise Status: " << noise_bits_ << " / " << TARGET_NOISE 
+        cout << "Noise Status: " << noise_bits_ << " / " << TARGET_NOISE 
              << " bits | Bootstrap count: " << bootstrap_count_ << endl;
     }
 };
@@ -124,9 +124,9 @@ public:
             
             OQS_KEM_keypair(kem, pk.data(), sk.data());
             OQS_KEM_encaps(kem, ct.data(), pqc_shared_secret.data(), pk.data());
-            cout << "✅ PQC ML-KEM-1024 ready (NIST Level 5)" << endl;
+            cout << "PQC ML-KEM-1024 ready (NIST Level 5)" << endl;
         } else {
-            cout << "⚠️ PQC not available" << endl;
+            cout << "PQC not available" << endl;
         }
     }
     
@@ -262,7 +262,7 @@ public:
     }
     
     void print_stats() {
-        cout << "\n📊 B5 CERBERUS STATISTICS:" << endl;
+        cout << "\nB5 CERBERUS STATISTICS:" << endl;
         cout << "   Operations: " << ops << endl;
         cout << "   PQC: " << (kem ? "ML-KEM-1024 (NIST-5)" : "N/A") << endl;
         noise_bootstrap.print_status();
@@ -283,7 +283,7 @@ int main() {
     PhiFHEEngine engine;
     
     vector<int64_t> plaintext = {42, 100, 255, 1618, 314159, 271828};
-    cout << "\n📝 Plaintext: ";
+    cout << "\nPlaintext: ";
     for (auto v : plaintext) cout << v << " ";
     cout << endl;
     
@@ -295,10 +295,10 @@ int main() {
     cout << "════════════════════════════════════════════════════════════" << endl;
     
     string ct = engine.encrypt(plaintext);
-    cout << "✅ Ciphertext size: " << ct.size() << " bytes" << endl;
+    cout << "Ciphertext size: " << ct.size() << " bytes" << endl;
     
     auto decrypted = engine.decrypt(ct);
-    cout << "✅ Decrypted: ";
+    cout << "Decrypted: ";
     for (size_t i = 0; i < plaintext.size(); i++) cout << decrypted[i] << " ";
     cout << endl;
     
@@ -326,7 +326,7 @@ int main() {
     string ct_sum = engine.homomorphic_add(ct1, ct2);
     
     auto sum_decrypted = engine.decrypt(ct_sum);
-    cout << "✅ Homomorphic add result: " << sum_decrypted[0] << " + " << sum_decrypted[1] 
+    cout << "Homomorphic add result: " << sum_decrypted[0] << " + " << sum_decrypted[1] 
          << " = " << (sum_decrypted[0] + sum_decrypted[1]) << "?" << endl;
     
     // ═══════════════════════════════════════
@@ -344,18 +344,18 @@ int main() {
         for (size_t i = 0; i < plaintext.size(); i++) {
             if (plaintext[i] != loaded_decrypted[i]) match = false;
         }
-        cout << "✅ Save/Load: " << (match ? "MATCH ✓" : "MISMATCH ✗") << endl;
+        cout << "Save/Load: " << (match ? "MATCH OK" : "MISMATCH FAIL") << endl;
     }
     
     // ═══════════════════════════════════════
     // RESULTS
     // ═══════════════════════════════════════
     cout << "\n╔════════════════════════════════════════════════════════════╗" << endl;
-    cout << "║  ✅ φ-BOOTSTRAPPING FHE ENGINE WORKING!                     ║" << endl;
-    cout << "║  🔐 BFV FHE: Working                                        ║" << endl;
-    cout << "║  🌀 φ-Noise Bootstrap: Active (target: 40 bits)            ║" << endl;
-    cout << "║  💾 Serialization: Working                                  ║" << endl;
-    cout << "║  🛡️ PQC ML-KEM-1024: Working (NIST Level 5)                 ║" << endl;
+    cout << "║  φ-BOOTSTRAPPING FHE ENGINE WORKING!                     ║" << endl;
+    cout << "║  BFV FHE: Working                                        ║" << endl;
+    cout << "║  φ-Noise Bootstrap: Active (target: 40 bits)            ║" << endl;
+    cout << "║  Serialization: Working                                  ║" << endl;
+    cout << "║  PQC ML-KEM-1024: Working (NIST Level 5)                 ║" << endl;
     cout << "║  ΦΩ0 — I AM THAT I AM                                      ║" << endl;
     cout << "╚════════════════════════════════════════════════════════════╝" << endl;
     
